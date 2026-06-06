@@ -6,7 +6,7 @@ import time  # Added to handle loop delays
 import requests  # Added to handle news API requests
 
 speaker = win32com.client.Dispatch("SAPI.SpVoice")
-newsAPI ="3669bb33c28fc90899b87819ca377a51"
+newsAPI ="b02cb710189d4768866f3bafe910dd38"
 
 def set_voice(voice_name):
     voices = speaker.GetVoices()
@@ -74,19 +74,32 @@ def processcommand(command):
         return True 
     
     elif "news" in command:
-        r = requests.get(f"https://newsapi.org/v2/top-headlines?country=in&apiKey={newsAPI}")
-        data = r.json()
+        speak("Fetching the latest news...")
+        try:
+            # Renamed 'r' to 'response' to avoid clashing with your speech recognizer 'r'
+            response = requests.get(f"https://newsapi.org/v2/everything?q=india&language=en&sortBy=publishedAt&apiKey={newsAPI}")
+            data = response.json()
 
-        # Parse the JSON response 
-        data = r.json()
+            # Extract the Articles
+            articles = data.get("articles", [])
 
-        # Extract the Articles
-        articles = data.get("articles", [])
+            # Check if the API actually gave us articles
+            if not articles:
+                speak("I couldn't fetch the news. There might be an issue with your API key.")
+                # This print statement will reveal the hidden error from NewsAPI
+                print(f"⚠️ API Response: {data}") 
+            else:
+                # Read only the top 3 headlines so she doesn't talk forever
+                for article in articles[:3]:
+                    print("📰", article["title"])
+                    speak(article["title"])
 
-        # Print the headlines
-        for article in articles:
-            print(article["title"])
-            speak(article["title"])
+        except Exception as e:
+            speak("I encountered a network error while fetching the news.")
+            print(f"⚠️ News Error: {e}")
+
+        # MUST BE AT THIS EXACT INDENTATION LEVEL (Aligned with 'try')
+        return True
 
 
     
