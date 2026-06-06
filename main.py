@@ -3,8 +3,10 @@ import webbrowser
 import win32com.client
 import musicLibrary
 import time  # Added to handle loop delays
+import requests  # Added to handle news API requests
 
 speaker = win32com.client.Dispatch("SAPI.SpVoice")
+newsAPI ="3669bb33c28fc90899b87819ca377a51"
 
 def set_voice(voice_name):
     voices = speaker.GetVoices()
@@ -70,6 +72,23 @@ def processcommand(command):
         else:
             speak(f"I couldn't find '{song}' in your music library.")
         return True 
+    
+    elif "news" in command:
+        r = requests.get(f"https://newsapi.org/v2/top-headlines?country=in&apiKey={newsAPI}")
+        data = r.json()
+
+        # Parse the JSON response 
+        data = r.json()
+
+        # Extract the Articles
+        articles = data.get("articles", [])
+
+        # Print the headlines
+        for article in articles:
+            print(article["title"])
+            speak(article["title"])
+
+
     
     elif "sleep" in command or "stop" in command or "exit" in command:
         speak("Going back to sleep. Wake me up if you need me.")
