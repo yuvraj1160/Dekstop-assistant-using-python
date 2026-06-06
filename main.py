@@ -15,7 +15,7 @@ def set_voice(voice_name):
             break
 
 def speak(text):
-    print(f"🤖 Jarvis says: {text}")
+    print(f"🤖 Arya says: {text}")
     try:
         # Using 1 for async mode. 
         speaker.Speak(text, 1)
@@ -34,32 +34,32 @@ def processcommand(command):
     if "female voice" in command:
         set_voice("Zira")
         speak("Female voice activated.")
-        return True      # Keep Jarvis awake after changing voice
+        return True      # Keep Arya awake after changing voice
 
     elif "male voice" in command:
         set_voice("David")
         speak("Male voice activated.")
-        return True      # Keep Jarvis awake after changing voice
+        return True      # Keep Arya awake after changing voice
 
     elif "google" in command:
         speak("Opening Google")
         webbrowser.open("https://www.google.com")
-        return True      # Keep Jarvis awake after opening Google
+        return True      # Keep Arya awake after opening Google
 
     elif "youtube" in command:
         speak("Opening YouTube")
         webbrowser.open("https://www.youtube.com")
-        return True      # Keep Jarvis awake after opening YouTube
+        return True      # Keep Arya awake after opening YouTube
 
     elif "facebook" in command:
         speak("Opening Facebook")
         webbrowser.open("https://www.facebook.com")
-        return True      # Keep Jarvis awake after opening Facebook
+        return True      # Keep Arya awake after opening Facebook
 
     elif "linkedin" in command:
         speak("Opening LinkedIn")
         webbrowser.open("https://www.linkedin.com")
-        return True     # Keep Jarvis awake after opening LinkedIn
+        return True     # Keep Arya awake after opening LinkedIn
     
     elif command.startswith("play"):
         song = command.replace("play", "").strip()
@@ -82,25 +82,25 @@ def processcommand(command):
 
 if __name__ == "__main__":
     set_voice("David")
-    speak("Initializing jarvis....")
+    speak("Initializing Arya....")
     
     r = sr.Recognizer()
     
     while True:
         print("\n--- SLEEP MODE ---")
-        print("Listening for wake word 'Jarvis'...") 
+        print("Listening for wake word 'Arya'...") 
 
         try:
             with sr.Microphone() as source:
                  # We set a hardcoded threshold here so we DO NOT need adjust_for_ambient_noise
                  r.adjust_for_ambient_noise(source, duration=1)
                  r.energy_threshold = 300
-                 audio = r.listen(source, timeout=4, phrase_time_limit=4)
+                 audio = r.listen(source, timeout=2, phrase_time_limit=4)
 
             word = r.recognize_google(audio).lower()
             print(f"🗣️ You said: {word}")
 
-            if "jarvis" in word:
+            if "arya" in word:
                 speak("Yes Yuvi?")
                 
                 is_awake = True
@@ -130,4 +130,4 @@ if __name__ == "__main__":
             pass
         except Exception as e:
             print(f"🚨 System Alert: {e}")
-            time.sleep(1)
+            time.sleep(1)    # Brief pause before retrying
