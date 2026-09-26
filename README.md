@@ -25,3 +25,36 @@ A fully conversational, rule-based desktop assistant built using Python. This pr
 - [ ] Replace strict `if/elif` rule-based blocks with an LLM pipeline (Gemini API Integration) for intent classification.
 - [ ] Transition from cloud-dependent Google Speech API to a local, open-source Speech-to-Text model (OpenAI Whisper).
 - [ ] Build an interactive visual dashboard interface using Web Development technologies (HTML/CSS/JavaScript).
+
+## Installation
+
+### 1. Clone the repository
+
+
+git clone https://github.com/yuvraj1160/Desktop-assistant-using-python.git
+cd Desktop-assistant-using-python
+
+pip install -r requirements.txt
+
+## 2. Project Structure
+
+
+```text
+Desktop-assistant-using-python/
+│
+├── main.py
+├── client.py
+├── musiclibrary.py
+├── README.md
+├── .gitignore
+└── .gitattributes
+
+```
+## 3. Usage
+
+
+1. Run `main.py`.
+2. Activate the assistant using the wake word `Jarvis`.
+3. Give a voice command.
+4. The assistant processes the command and performs the corresponding action.
+5. Use the sleep command to stop continuous listening.
