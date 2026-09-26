@@ -1,0 +1,5 @@
+SpeechRecognition
+pywin32
+requests
+google-genai
+google-generativeai
